@@ -1,0 +1,11 @@
+div.past-event span.simcal-event-title {
+	color: #979797;
+}
+
+div.future-event span.simcal-event-title {
+	color: #25709a;
+}
+
+div.current-event span.simcal-event-title {
+	color: #248cc8;
+}
