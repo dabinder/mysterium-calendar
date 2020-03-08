@@ -1,5 +1,5 @@
 (function () {
-	const UPDATE_FREQUENCY = 60;
+	const UPDATE_FREQUENCY = 60; //update every minute
 	const EVENT_CLASSES = {
 		past: "past-event",
 		current: "current-event",
@@ -8,18 +8,16 @@
 	
 	/**
 	 * set class on event element to past/current/future, remove other classes as needed
-	 * @param {WEBElement} element 
-	 * @param {string} state 
+	 * @param {WEBElement} element event element to update
+	 * @param {string} state past/current/future state
 	 */
 	function setEventState(element, state) {
 		let classList = element.classList;
-
-		Object.keys(EVENT_CLASSES).forEach(function (key) {
-			let className = EVENT_CLASSES[key];
-			if (key == state && !classList.contains(className)) {
-				classList.add(className);
-			} else if (key != state && classList.contains(className)) {
-				classList.remove(className);
+		Object.values(EVENT_CLASSES).forEach(function (value) {
+			if (value == state && !classList.contains(state)) {
+				classList.add(value);
+			} else if (value != state && classList.contains(state)) {
+				classList.remove(value);
 			}
 		});
 	}
@@ -31,13 +29,13 @@
 			let element = event.eventElement;
 			if (now >= event.start) {
 				if (now <= event.end) {
-					setEventState(element, "current");
+					setEventState(element, EVENT_CLASSES.current);
 					if (!event.allDay) currentEvent = event;
 				} else { //now > event.end
-					setEventState(element, "past");
+					setEventState(element, EVENT_CLASSES.past);
 				}
 			} else { //now < event.start
-				setEventState(element, "future");
+				setEventState(element, EVENT_CLASSES.future);
 			}
 		});
 	}
