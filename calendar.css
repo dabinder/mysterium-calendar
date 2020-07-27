@@ -1,11 +1,60 @@
-div.past-event span.simcal-event-title {
-	color: #979797;
+/* calendar fun */
+
+/* change these colors as needed */
+div.simcal-calendar {
+	--bg-color-current: cornsilk;
+	--twitch-color: steelblue;
+	--youtube-color: crimson;
+	--other-color: seagreen;
 }
 
-div.future-event span.simcal-event-title {
-	color: #25709a;
+div.simcal-event-details {
+	margin-left: -10px;
 }
 
-div.current-event span.simcal-event-title {
-	color: #248cc8;
+div.simcal-event-details > div.event-content {
+	border-bottom: thin #EEE outset;
+	border-left: medium outset;
+	padding: 10px;
+}
+
+div.simcal-event-details > div[data-location="Twitch & YouTube"] {
+	border-left-color: var(--twitch-color);
+}
+
+div.simcal-event-details > div[data-location="Twitch & YouTube"] .simcal-event-start-location {
+	color: var(--twitch-color);
+}
+
+div.simcal-event-details > div[data-location="YouTube"] {
+	border-left-color: var(--youtube-color);
+}
+
+div.simcal-event-details > div[data-location="YouTube"] .simcal-event-start-location {
+	color: var(--youtube-color);
+}
+
+div.simcal-event-details > div[data-location="Other"] {
+	border-left-color: var(--other-color);
+}
+
+div.simcal-event-details > div[data-location="Other"] .simcal-event-start-location {
+	color: var(--other-color);
+}
+
+div.simcal-calendar div.simcal-event-details.current-event {
+	background: var(--bg-color-current);
+}
+
+div.simcal-calendar div.simcal-event-details.past-event {
+	filter: contrast(0%);
+}
+
+.simcal-event-start-location {
+	font-size:15px;
+}
+
+.simcal-event-title {
+	font-weight: bold;
+	font-size: 17px;
 }
