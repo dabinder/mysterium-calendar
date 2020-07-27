@@ -25,11 +25,15 @@
 					localOffset /= -60;
 					textContent = "Your timezone was detected as UTC" + (localOffset < 0 ? localOffset : "+" + localOffset) + ". ";
 				}
-				textContent += "Select here to change the displayed timezone. Note this will only update times listed below; dates will not be updated.  ";
+				textContent += "Select here to change the displayed timezone: ";
 				selectionTxt.textContent = textContent;
+				tzOffsetElt.innerHTML = "";
 				tzOffsetElt.appendChild(selectionTxt);
 				tzOffsetElt.appendChild(tzSelector);
-				tzSelector.addEventListener("change", function (e) {
+				selectionTxt = document.createElement("div");
+				selectionTxt.textContent = "Note this will only update times listed below; dates will be always be based on UTC" + (offset < 0 ? offset : "+" + offset) + ".  ";
+				tzOffsetElt.appendChild(selectionTxt);
+				tzSelector.addEventListener("change", function () {
 					eventTimes.forEach(function (eventTime) {
 						let timeStr = eventTime.dataset.eventStart || eventTime.dataset.eventEnd;
 						if (timeStr == undefined) return;
