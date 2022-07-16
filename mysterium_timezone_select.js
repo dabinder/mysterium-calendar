@@ -16,7 +16,7 @@
 
 				localOffset /= -60;
 				let tzNotice = document.createElement("div");
-				tzNotice.textContent = "The official timezone for Mysterium this year is North America Eastern Daylight Time (UTC-4), but you can display this calendar in your local time for convenience. Your timezone was detected as UTC" + (localOffset < 0 ? localOffset : "+" + localOffset) + ". ";
+				tzNotice.textContent = "You can display this calendar in your local time for convenience. Your timezone was detected as UTC" + (localOffset < 0 ? localOffset : "+" + localOffset) + ". ";
 				tzOffsetElt.appendChild(tzNotice);
 
 				let selectionDiv = document.createElement("div");
