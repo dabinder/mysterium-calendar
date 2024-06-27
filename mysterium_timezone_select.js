@@ -1,4 +1,6 @@
 (function () {
+	const MYSTERIUM_TZ = -4;
+	
 	//this doesn't currently support all day events so if you need one of those then ¯\_(ツ)_/¯
 	document.addEventListener("DOMContentLoaded", function () {
 		//timezone offset option
@@ -12,25 +14,51 @@
 				let localOffset = new Date().getTimezoneOffset();
 				if (localOffset === undefined) return;
 				
+				let css = "button { margin: 0 10px; }";
+				let style = document.createElement("style");
+				document.head.appendChild(style);
+				style.appendChild(document.createTextNode(css));
+				
 				tzOffsetElt.innerHTML = "";
 
 				localOffset /= -60;
 				let tzNotice = document.createElement("div");
-				tzNotice.textContent = "You can display this calendar in your local time for convenience. Your timezone was detected as UTC" + (localOffset < 0 ? localOffset : "+" + localOffset) + ". ";
+				tzNotice.textContent = "Your timezone was detected as UTC" + (localOffset < 0 ? localOffset : "+" + localOffset) + ". ";
 				tzOffsetElt.appendChild(tzNotice);
+				
+				let tzSelectDiv = document.createElement("div");
+				tzOffsetElt.appendChild(tzSelectDiv);
+				let buttonDesc = document.createElement("div");
+				buttonDesc.textContent = "Click here to set the displayed time zone:";
+				tzSelectDiv.appendChild(buttonDesc);
+				let buttonDiv = document.createElement("div");
+				tzSelectDiv.appendChild(buttonDiv);
+				let localTz = document.createElement("button");
+				localTz.textContent = "My Time Zone";
+				localTz.addEventListener("click", function() {
+					updateTz(localOffset);
+				}, false);
+				buttonDiv.appendChild(localTz);
+				let conTz = document.createElement("button");
+				conTz.textContent = "Mysterium Time Zone";
+				conTz.addEventListener("click", function () {
+					updateTz(MYSTERIUM_TZ);
+				}, false);
+				buttonDiv.appendChild(conTz);
 
 				let selectionDiv = document.createElement("div");
-				tzOffsetElt.appendChild(selectionDiv);
+				tzSelectDiv.appendChild(selectionDiv);
 				let selectionText = document.createElement("span");
-				selectionText.textContent = "Select here to change the displayed timezone: ";
+				selectionText.textContent = "Or select here to set a different time zone: ";
 				selectionDiv.appendChild(selectionText);
 				
 				let tzSelector = document.createElement("select");
+				tzSelector.id = "tz-select";
 				for (i = -12; i <= 14; i++) {
 					let opt = document.createElement("option");
 					opt.value = i;
 					opt.textContent = "UTC" + (i < 0 ? i : "+" + i);
-					if (i == localOffset) opt.selected = true;
+					if (i == MYSTERIUM_TZ) opt.selected = true;
 					tzSelector.appendChild(opt);
 				}
 				selectionDiv.appendChild(tzSelector);
@@ -103,4 +131,10 @@
 			//just stick with the default
 		}
 	}, false);
+	
+	function updateTz(offset) {
+		let tzSelect = document.getElementById("tz-select");
+		tzSelect.value = offset;
+		tzSelect.dispatchEvent(new Event("change"));
+	}
 })();
