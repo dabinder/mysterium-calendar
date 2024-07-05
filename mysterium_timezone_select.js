@@ -1,12 +1,12 @@
 (function () {
-	const MYSTERIUM_TZ = -4;
-	
 	//this doesn't currently support all day events so if you need one of those then ¯\_(ツ)_/¯
 	document.addEventListener("DOMContentLoaded", function () {
 		//timezone offset option
 		let tzOffsetElt = document.getElementById("tz_offset_selection"),
 			eventTimes = document.querySelectorAll(".simcal-event-start-time, .simcal-event-end-time"),
-			listContainer = document.getElementsByClassName("simcal-events-list-container")[0];
+			listContainer = document.getElementsByClassName("simcal-events-list-container")[0],
+			calendar = document.getElementsByClassName("simcal-calendar")[0],
+			mysteriumTz = parseInt(calendar.dataset.offset) / (60 * 60);
 
 		try { //insurance in case someone's browser explodes
 			if (tzOffsetElt != null) {
@@ -42,7 +42,7 @@
 				let conTz = document.createElement("button");
 				conTz.textContent = "Mysterium Time Zone";
 				conTz.addEventListener("click", function () {
-					updateTz(MYSTERIUM_TZ);
+					updateTz(mysteriumTz);
 				}, false);
 				buttonDiv.appendChild(conTz);
 
@@ -58,7 +58,7 @@
 					let opt = document.createElement("option");
 					opt.value = i;
 					opt.textContent = "UTC" + (i < 0 ? i : "+" + i);
-					if (i == MYSTERIUM_TZ) opt.selected = true;
+					if (i == mysteriumTz) opt.selected = true;
 					tzSelector.appendChild(opt);
 				}
 				selectionDiv.appendChild(tzSelector);
