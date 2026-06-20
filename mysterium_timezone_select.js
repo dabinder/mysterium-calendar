@@ -1,5 +1,6 @@
 (function () {
-	const MYSTERIUM_TZ = -4;
+	const dataset = document.currentScript.dataset;
+	const offset = parseInt(dataset.timezone);
 	
 	//this doesn't currently support all day events so if you need one of those then ¯\_(ツ)_/¯
 	document.addEventListener("DOMContentLoaded", function () {
@@ -42,7 +43,7 @@
 				let conTz = document.createElement("button");
 				conTz.textContent = "Mysterium Time Zone";
 				conTz.addEventListener("click", function () {
-					updateTz(MYSTERIUM_TZ);
+					updateTz(offset);
 				}, false);
 				buttonDiv.appendChild(conTz);
 
@@ -58,7 +59,7 @@
 					let opt = document.createElement("option");
 					opt.value = i;
 					opt.textContent = "UTC" + (i < 0 ? i : "+" + i);
-					if (i == MYSTERIUM_TZ) opt.selected = true;
+					if (i == offset) opt.selected = true;
 					tzSelector.appendChild(opt);
 				}
 				selectionDiv.appendChild(tzSelector);
